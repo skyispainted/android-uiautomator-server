@@ -22,6 +22,7 @@ final class PurchasePageStateScanner {
     private static final String RETRY_REFRESH_BUTTON_ID =
             "cn.damai:id/state_view_refresh_btn";
     private static final String BUY_BUTTON_ID = "cn.damai:id/btn_buy_view";
+    private static final String BUY_BUTTON_OVERLAY_ID = "cn.damai:id/view_translucent";
     private static final String PERFORM_CONTAINER_ID = "cn.damai:id/layout_perform_view";
     private static final String PRICE_CONTAINER_ID =
             "cn.damai:id/project_detail_perform_price_flowlayout";
@@ -45,7 +46,7 @@ final class PurchasePageStateScanner {
         AccessibilityNodeInfo root = uiAutomation.getRootInActiveWindow();
         if (root == null) {
             return new PurchasePageState(
-                    PAGE_UNKNOWN, false, false, null, false, null, null, false, false, false);
+                    PAGE_UNKNOWN, false, false, null, false, null, null, false, false, false, false);
         }
 
         ObservedNodes observed = new ObservedNodes();
@@ -84,6 +85,8 @@ final class PurchasePageStateScanner {
             observed.retryRefresh = boundsOf(node);
         } else if (BUY_BUTTON_ID.equals(resourceId)) {
             observed.confirmPurchase = boundsOf(node);
+        } else if (BUY_BUTTON_OVERLAY_ID.equals(resourceId)) {
+            observed.confirmPurchaseOverlayVisible = true;
         } else if (PERFORM_CONTAINER_ID.equals(resourceId)) {
             observed.sessionContainerVisible = true;
         } else if (PRICE_CONTAINER_ID.equals(resourceId)) {
@@ -128,6 +131,7 @@ final class PurchasePageStateScanner {
         boolean retryRefreshVisible;
         PurchasePageState.Bounds retryRefresh;
         PurchasePageState.Bounds confirmPurchase;
+        boolean confirmPurchaseOverlayVisible;
         boolean sessionContainerVisible;
         boolean priceContainerVisible;
         boolean reservationCancelVisible;
@@ -147,6 +151,7 @@ final class PurchasePageStateScanner {
                     countdownVisible,
                     retryRefresh,
                     confirmPurchase,
+                    confirmPurchase != null && !confirmPurchaseOverlayVisible,
                     sessionContainerVisible,
                     priceContainerVisible,
                     orderConfirmationVisible);

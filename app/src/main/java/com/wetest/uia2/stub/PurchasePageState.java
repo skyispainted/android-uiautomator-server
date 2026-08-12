@@ -1,7 +1,7 @@
 package com.wetest.uia2.stub;
 
 public final class PurchasePageState {
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     private final int version;
     private final String pageState;
@@ -11,6 +11,7 @@ public final class PurchasePageState {
     private final boolean countdownVisible;
     private final Bounds retryRefresh;
     private final Bounds confirmPurchase;
+    private final boolean confirmPurchaseEnabled;
     private final boolean sessionContainerVisible;
     private final boolean priceContainerVisible;
     private final boolean orderConfirmationVisible;
@@ -23,6 +24,7 @@ public final class PurchasePageState {
             boolean countdownVisible,
             Bounds retryRefresh,
             Bounds confirmPurchase,
+            boolean confirmPurchaseEnabled,
             boolean sessionContainerVisible,
             boolean priceContainerVisible,
             boolean orderConfirmationVisible) {
@@ -34,6 +36,7 @@ public final class PurchasePageState {
         this.countdownVisible = countdownVisible;
         this.retryRefresh = retryRefresh;
         this.confirmPurchase = confirmPurchase;
+        this.confirmPurchaseEnabled = confirmPurchaseEnabled;
         this.sessionContainerVisible = sessionContainerVisible;
         this.priceContainerVisible = priceContainerVisible;
         this.orderConfirmationVisible = orderConfirmationVisible;
@@ -69,6 +72,10 @@ public final class PurchasePageState {
 
     public Bounds getConfirmPurchase() {
         return confirmPurchase;
+    }
+
+    public boolean isConfirmPurchaseEnabled() {
+        return confirmPurchaseEnabled;
     }
 
     public boolean isSessionContainerVisible() {
