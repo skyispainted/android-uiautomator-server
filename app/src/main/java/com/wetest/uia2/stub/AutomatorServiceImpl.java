@@ -107,8 +107,8 @@ public class AutomatorServiceImpl implements AutomatorService {
         Configurator configurator = Configurator.getInstance();
         configurator.setWaitForSelectorTimeout(0L); // Default 10000
         configurator.setWaitForIdleTimeout(0L); // Default 10000
-        configurator.setActionAcknowledgmentTimeout(500); // Default 3000
-        configurator.setScrollAcknowledgmentTimeout(200); // Default 200
+        configurator.setActionAcknowledgmentTimeout(0L);
+        configurator.setScrollAcknowledgmentTimeout(0L);
         configurator.setKeyInjectionDelay(0); // Default 0
         // https://developer.android.com/reference/androidx/core/accessibilityservice/AccessibilityServiceInfoCompat#FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY()
         // https://www.jianshu.com/p/a8ccd607e172
