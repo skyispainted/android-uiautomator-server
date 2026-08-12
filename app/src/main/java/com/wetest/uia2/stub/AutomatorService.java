@@ -165,6 +165,13 @@ public interface AutomatorService {
     String dumpWindowHierarchy(boolean compressed, int maxDepth, boolean rootInActive);
 
     /**
+     * Reads the purchase-related state from one active-window traversal without XML serialization or idle waiting.
+     *
+     * @return versioned purchase page state and actionable bounds.
+     */
+    PurchasePageState getPurchasePageState();
+
+    /**
      * Take a screenshot of current window and store it as PNG The screenshot is adjusted per screen rotation
      *
      * @param filename where the PNG should be written to

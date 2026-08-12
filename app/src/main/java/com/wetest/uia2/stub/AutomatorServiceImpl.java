@@ -294,6 +294,11 @@ public class AutomatorServiceImpl implements AutomatorService {
         return null;
     }
 
+    @Override
+    public PurchasePageState getPurchasePageState() {
+        return PurchasePageStateScanner.scan(getUiAutomation());
+    }
+
     /**
      * Take a screenshot of current window and store it as PNG The screenshot is adjusted per screen rotation
      *
