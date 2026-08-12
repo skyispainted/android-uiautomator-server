@@ -12,6 +12,7 @@ final class PurchasePageStateScanner {
     private static final String PAGE_RETRY = "retry";
     private static final String PAGE_RESERVATION = "reservation";
     private static final String PAGE_ORDER_CONFIRMATION = "order_confirmation";
+    private static final String PAGE_PURCHASE_HOME_WAITING = "purchase_home_waiting";
     private static final String PAGE_UNKNOWN = "unknown";
 
     private static final String RESERVE_BUTTON_ID =
@@ -32,6 +33,10 @@ final class PurchasePageStateScanner {
     private static final String RESERVATION_PRICE_TITLE_TEXT = "预约想看票档";
     private static final String ORDER_TITLE_ID = "cn.damai:id/order_activity_title";
     private static final String ORDER_TITLE_TEXT = "确认购买";
+    private static final String PROJECT_RECYCLER_ID = "cn.damai:id/id_new_project_recycler";
+    private static final String PROJECT_TITLE_BAR_ID = "cn.damai:id/project_detail_title_bar";
+    private static final String PROJECT_WANT_TO_SEE_ID =
+            "cn.damai:id/project_item_bottom_want_to_see_fl";
 
     private PurchasePageStateScanner() {
     }
@@ -93,6 +98,12 @@ final class PurchasePageStateScanner {
                     toString(node.getText()));
         } else if (ORDER_TITLE_ID.equals(resourceId)) {
             observed.orderConfirmationVisible = ORDER_TITLE_TEXT.equals(toString(node.getText()));
+        } else if (PROJECT_RECYCLER_ID.equals(resourceId)) {
+            observed.projectRecyclerVisible = true;
+        } else if (PROJECT_TITLE_BAR_ID.equals(resourceId)) {
+            observed.projectTitleBarVisible = true;
+        } else if (PROJECT_WANT_TO_SEE_ID.equals(resourceId)) {
+            observed.projectWantToSeeVisible = true;
         }
     }
 
@@ -123,6 +134,9 @@ final class PurchasePageStateScanner {
         boolean reservationSessionTitleVisible;
         boolean reservationPriceTitleVisible;
         boolean orderConfirmationVisible;
+        boolean projectRecyclerVisible;
+        boolean projectTitleBarVisible;
+        boolean projectWantToSeeVisible;
 
         PurchasePageState toPurchasePageState() {
             return new PurchasePageState(
@@ -152,6 +166,11 @@ final class PurchasePageStateScanner {
             }
             if (reserveVisible) {
                 return PAGE_WAITING_HOME;
+            }
+            if (projectRecyclerVisible
+                    && projectTitleBarVisible
+                    && projectWantToSeeVisible) {
+                return PAGE_PURCHASE_HOME_WAITING;
             }
             if (orderConfirmationVisible) {
                 return PAGE_ORDER_CONFIRMATION;
