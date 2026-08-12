@@ -41,7 +41,7 @@ android {
     // 2: update all dependencies to latest
     // 6: input method, battery,rotation monitor
     androidGitVersion {
-        baseCode 1
+        baseCode 2004002
     }
 
     defaultConfig {
