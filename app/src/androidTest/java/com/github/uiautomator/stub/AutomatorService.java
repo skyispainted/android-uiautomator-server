@@ -186,6 +186,16 @@ public interface AutomatorService {
     String dumpWindowHierarchy(boolean compressed, int maxDepth);
 
     /**
+     * Dump the hierarchy with optional active-window-only traversal.
+     *
+     * @param compressed use compressed layout hierarchy or not.
+     * @param maxDepth maximum node depth.
+     * @param rootInActive true to traverse only the active window root.
+     * @return xml content.
+     */
+    String dumpWindowHierarchy(boolean compressed, int maxDepth, boolean rootInActive);
+
+    /**
      * Take a screenshot of current window and store it as PNG The screenshot is adjusted per screen rotation
      *
      * @param filename where the PNG should be written to

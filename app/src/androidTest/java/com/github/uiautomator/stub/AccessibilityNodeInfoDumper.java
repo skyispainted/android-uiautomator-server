@@ -36,7 +36,16 @@ class AccessibilityNodeInfoDumper {
 
     private AccessibilityNodeInfoDumper() { }
 
-    public static void dumpWindowHierarchy(UiDevice device, OutputStream out, int maxDepth) throws IOException {
+    public static void dumpWindowHierarchy(UiDevice device, OutputStream out, int maxDepth)
+            throws IOException {
+        dumpWindowHierarchy(device, out, maxDepth, false);
+    }
+
+    public static void dumpWindowHierarchy(
+            UiDevice device,
+            OutputStream out,
+            int maxDepth,
+            boolean rootInActive) throws IOException {
         try (Section ignored = Traces.trace("AccessibilityNodeInfoDumper.dumpWindowHierarchy")) {
             XmlSerializer serializer = Xml.newSerializer();
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
@@ -46,14 +55,29 @@ class AccessibilityNodeInfoDumper {
             serializer.startTag("", "hierarchy"); // TODO(allenhair): Should we use a namespace?
             serializer.attribute("", "rotation", Integer.toString(device.getDisplayRotation()));
 
-            for (AccessibilityNodeInfo root : getWindowRoots(device)) {
+            AccessibilityNodeInfo[] roots = rootInActive
+                    ? getActiveWindowRoot()
+                    : getWindowRoots(device);
+            for (AccessibilityNodeInfo root : roots) {
                 dumpNodeRec(root, serializer, 0, device.getDisplayWidth(),
                             device.getDisplayHeight(), maxDepth);
+                root.recycle();
             }
 
             serializer.endTag("", "hierarchy");
             serializer.endDocument();
         }
+    }
+
+    static AccessibilityNodeInfo[] getActiveWindowRoot() {
+        AccessibilityNodeInfo activeRoot = InstrumentationRegistry.getInstrumentation()
+                .getUiAutomation()
+                .getRootInActiveWindow();
+        if (activeRoot == null) {
+            Log.w(TAG, "Active window root not found.");
+            return new AccessibilityNodeInfo[0];
+        }
+        return new AccessibilityNodeInfo[] {activeRoot};
     }
 
     static AccessibilityNodeInfo[] getWindowRoots(UiDevice device) {
