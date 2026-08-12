@@ -97,6 +97,14 @@ public interface AutomatorService {
     DeviceInfo deviceInfo();
 
     /**
+     * Read the current Damai purchase page in a single active-window traversal.
+     * This endpoint is read-only and never waits for idle or performs input.
+     *
+     * @return versioned purchase-page state.
+     */
+    PurchasePageState getPurchasePageState();
+
+    /**
      * Perform a click at arbitrary coordinates specified by the user.
      *
      * @param x coordinate

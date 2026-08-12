@@ -44,6 +44,7 @@ import com.googlecode.jsonrpc4j.ErrorResolver;
 import com.googlecode.jsonrpc4j.JsonRpcServer;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -144,6 +145,13 @@ public class Stub {
             if (i > 1) Thread.sleep(1000);
         }
         return false;
+    }
+
+    @Test
+    public void getPurchasePageStateReturnsVersionedReadOnlyResult() {
+        PurchasePageState result = new AutomatorServiceImpl().getPurchasePageState();
+        Assert.assertEquals(PurchasePageState.VERSION, result.getVersion());
+        Assert.assertNotNull(result.getPageState());
     }
 
     @Test

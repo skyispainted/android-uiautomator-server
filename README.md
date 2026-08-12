@@ -50,6 +50,24 @@ $ curl -X POST -d '{"jsonrpc": "2.0", "id": "1f0f2655716023254ed2b57ba4198815", 
  'naturalOrientation': True}
 ```
 
+## Damai fast page-state RPC
+
+This fork exposes a read-only `getPurchasePageState` RPC for the purchase-state
+machine. It reads the active window exactly once, traverses visible nodes without
+waiting for idle or serializing XML, and never clicks or submits an order.
+
+```bash
+$ curl -X POST -d '{"jsonrpc":"2.0","id":1,"method":"getPurchasePageState","params":{}}' 'http://127.0.0.1:9008/jsonrpc/0'
+```
+
+The versioned response includes the classified page state and nullable bounds for
+the reserve, retry-refresh, and ticket-tier confirmation controls. Classifier precedence
+is `retry`, `reservation`, `price_selection`, `waiting_home`, then
+`order_confirmation`; an order title alone is not sufficient. Consumers must reject
+unknown response versions and should retain full hierarchy dumps only for diagnostics
+and session/tier content parsing.
+
+
 # Resources
 - [Google UiAutomator Tutorial](https://developer.android.com/training/testing/ui-testing/uiautomator-testing?hl=zh-cn)
 - [Google UiAutomator API](https://developer.android.com/reference/kotlin/androidx/test/uiautomator/package-summary)

@@ -169,6 +169,11 @@ public class AutomatorServiceImpl implements AutomatorService {
     }
 
     @Override
+    public PurchasePageState getPurchasePageState() {
+        return PurchasePageStateScanner.scan(getUiAutomation());
+    }
+
+    @Override
     public boolean makeToast(final String text, final int duration) {
 
         handler.post(new Runnable() {
